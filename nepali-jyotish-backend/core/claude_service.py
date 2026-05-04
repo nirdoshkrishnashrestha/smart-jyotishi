@@ -242,7 +242,7 @@ async def _generate_with_claude(prompt: str, system_prompt: str = SYSTEM_PROMPT)
 
 async def _generate_with_gemini(prompt: str, system_prompt: str = SYSTEM_PROMPT) -> dict:
     if not GEMINI_API_KEY:
-        raise ValueError("GEMINI_API_KEY is missing for development mode")
+    raise ValueError("GEMINI_API_KEY is missing")
         
     try:
         model = genai.GenerativeModel(
