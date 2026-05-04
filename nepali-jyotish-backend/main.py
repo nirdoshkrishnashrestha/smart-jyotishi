@@ -2,6 +2,8 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api import auth, profile, chat, questions, payments
+from database.connection import engine, Base
+from database import schemas
 
 app = FastAPI(title="Smart Jyotishi Backend")
 
