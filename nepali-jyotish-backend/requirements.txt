@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+sqlalchemy
+asyncpg
+alembic
+pydantic
+python-dotenv
+httpx
+python-jose[cryptography]
+passlib[bcrypt]
+anthropic
+pyswisseph
+bikram-sambat
+pytz
+google-generativeai
+nepali-datetime

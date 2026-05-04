@@ -1,0 +1,526 @@
+:root {
+  --gold: #c7a24a;
+  --gold-light: #f2d883;
+  --saffron: #e58a2a;
+  --teal: #49b6a6;
+  --deep: #07050a;
+  --ink: #160c12;
+  --smoke: #f0e8d8;
+}
+
+.contact-shell,
+.contact-shell * {
+  box-sizing: border-box;
+}
+
+.contact-shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  padding-top: 76px;
+  background:
+    linear-gradient(115deg, rgba(7, 5, 10, 0.98) 0%, rgba(22, 12, 18, 0.92) 48%, rgba(8, 13, 24, 0.98) 100%),
+    repeating-linear-gradient(90deg, rgba(242, 216, 131, 0.035) 0 1px, transparent 1px 132px),
+    repeating-linear-gradient(0deg, rgba(73, 182, 166, 0.025) 0 1px, transparent 1px 132px);
+  color: var(--smoke);
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.contact-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(128deg, transparent 0 50%, rgba(242, 216, 131, 0.13) 50.15%, transparent 50.35% 100%),
+    linear-gradient(34deg, transparent 0 58%, rgba(73, 182, 166, 0.11) 58.15%, transparent 58.35% 100%);
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.contact-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.24;
+}
+
+.contact-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 12% 22%, rgba(242, 216, 131, 0.72) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 72% 18%, rgba(73, 182, 166, 0.6) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 86% 66%, rgba(242, 216, 131, 0.48) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 30% 78%, rgba(240, 232, 216, 0.4) 0 1px, transparent 1.5px);
+  background-size: 260px 260px, 320px 320px, 380px 380px, 290px 290px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.contact-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 76px;
+  padding: 0 clamp(1.25rem, 5vw, 4.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.5s, backdrop-filter 0.5s, border-color 0.5s;
+}
+
+.contact-nav.scrolled {
+  background: rgba(7, 5, 10, 0.84);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(242, 216, 131, 0.16);
+}
+
+.contact-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--gold-light);
+  font-family: "Cinzel", "Times New Roman", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.02;
+  text-decoration: none;
+}
+
+.contact-logo span {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(242, 216, 131, 0.36);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 8px;
+  background-color: #130f12;
+  box-shadow: inset 0 0 18px rgba(229, 138, 42, 0.12), 0 0 18px rgba(199, 162, 74, 0.12);
+  font-family: "Noto Serif Devanagari", serif;
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.contact-logo small {
+  display: block;
+  color: rgba(242, 216, 131, 0.62);
+  font-family: "Inter", sans-serif;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+}
+
+.contact-nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 1.5vw, 2rem);
+}
+
+.contact-nav-links a,
+.contact-nav-links button {
+  border: 0;
+  background: transparent;
+  color: rgba(240, 232, 216, 0.68);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  font-family: inherit;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s, box-shadow 0.25s, background 0.25s;
+}
+
+.contact-nav-links a:hover,
+.contact-nav-links button:hover {
+  color: var(--gold-light);
+}
+
+.contact-nav-links .contact-nav-cta {
+  border: 1px solid rgba(242, 216, 131, 0.62);
+  border-radius: 999px;
+  padding: 0.62rem 1.25rem;
+  color: var(--gold-light);
+  box-shadow: inset 0 0 18px rgba(199, 162, 74, 0.08);
+}
+
+.contact-nav-links .contact-nav-cta:hover {
+  background: rgba(255, 222, 122, 0.1);
+  border-color: #ffde7a;
+  box-shadow: 0 0 15px rgba(242, 216, 131, 0.3);
+  color: #fff;
+}
+
+.contact-hero {
+  position: relative;
+  z-index: 2;
+  min-height: calc(100vh - 76px);
+  display: grid;
+  grid-template-columns: minmax(0, 590px) minmax(320px, 480px);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6rem);
+  padding: 40px clamp(1.25rem, 6vw, 6rem) 72px;
+}
+
+.contact-copy {
+  max-width: 590px;
+}
+
+.contact-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.2rem;
+  color: rgba(242, 216, 131, 0.78);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.contact-eyebrow::before {
+  content: "";
+  width: 34px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--teal), var(--gold-light));
+}
+
+.contact-title {
+  margin: 17px 0 1rem;
+  max-width: 560px;
+  color: #f5ead5;
+  font-family: "Cinzel", "Times New Roman", serif;
+  font-size: 37px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.08;
+}
+
+.contact-title em {
+  display: block;
+  margin-top: 11px;
+  color: var(--gold-light);
+  font-family: "Noto Serif Devanagari", "Times New Roman", serif;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 600;
+  text-shadow: 0 0 28px rgba(242, 216, 131, 0.14);
+}
+
+.contact-body {
+  max-width: 540px;
+  margin: 1.45rem 0 0;
+  color: rgba(240, 232, 216, 0.68);
+  font-size: 1.02rem;
+  line-height: 1.85;
+}
+
+.contact-panel {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  align-self: start;
+  overflow: hidden;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid rgba(240, 232, 216, 0.11);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(240, 232, 216, 0.055), rgba(240, 232, 216, 0.018)),
+    rgba(9, 7, 13, 0.8);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  isolation: isolate;
+}
+
+.contact-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 24px 24px, rgba(242, 216, 131, 0.08), transparent 26px),
+    linear-gradient(135deg, rgba(73, 182, 166, 0.08), transparent 46%);
+  opacity: 0.54;
+  z-index: -1;
+}
+
+.contact-panel-header,
+.contact-card {
+  position: relative;
+  z-index: 2;
+}
+
+.contact-panel-header {
+  margin-bottom: 0.65rem;
+}
+
+.contact-panel-kicker {
+  margin: 0 0 0.5rem;
+  color: rgba(73, 182, 166, 0.88);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.contact-panel-title {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Cinzel", "Times New Roman", serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.contact-panel-subtitle {
+  margin: 0.58rem 0 0;
+  color: rgba(240, 232, 216, 0.62);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.contact-card {
+  min-height: 3.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.82rem;
+  padding: 0.88rem 0.95rem;
+  border: 1px solid rgba(240, 232, 216, 0.12);
+  border-radius: 8px;
+  background: rgba(7, 5, 10, 0.58);
+  color: #fff8e5;
+  text-decoration: none;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(242, 216, 131, 0.28);
+  background: rgba(7, 5, 10, 0.68);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+.contact-icon {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border: 1px solid rgba(240, 232, 216, 0.12);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(7, 5, 10, 0.42);
+  color: rgba(242, 216, 131, 0.86);
+  box-shadow: inset 0 0 14px rgba(229, 138, 42, 0.08);
+}
+
+.contact-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.contact-card small {
+  display: block;
+  margin-bottom: 0.22rem;
+  color: rgba(240, 232, 216, 0.76);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-card strong {
+  display: block;
+  color: #fff8e5;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .contact-nav {
+    height: auto;
+    min-height: 76px;
+    gap: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .contact-nav-links {
+    gap: 0.75rem;
+  }
+
+  .contact-nav-links a:not(.contact-nav-cta),
+  .contact-nav-links button:not(.contact-nav-cta) {
+    display: none;
+  }
+
+  .contact-hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  .contact-copy {
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .contact-eyebrow {
+    justify-content: center;
+  }
+
+  .contact-eyebrow::after {
+    content: "";
+    width: 34px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold-light), var(--teal));
+  }
+
+  .contact-body {
+    margin-inline: auto;
+  }
+
+  .contact-title {
+    font-size: 37px;
+  }
+
+  .contact-title em {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact-nav {
+    align-items: flex-start;
+  }
+
+  .contact-logo {
+    font-size: 1rem;
+  }
+
+  .contact-logo span {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+  }
+
+  .contact-logo small {
+    font-size: 0.54rem;
+    letter-spacing: 0.16em;
+  }
+
+  .contact-nav-links .contact-nav-cta {
+    min-height: 2.35rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.58rem 0.74rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+  }
+
+  .contact-hero {
+    gap: 1.4rem;
+    padding-inline: 0.9rem;
+  }
+
+  .contact-eyebrow {
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+
+  .contact-eyebrow::before,
+  .contact-eyebrow::after {
+    width: 22px;
+  }
+
+  .contact-title {
+    font-size: 35px;
+  }
+
+  .contact-title em {
+    font-size: 28px;
+  }
+
+  .contact-body {
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .contact-panel {
+    padding: 1rem;
+  }
+
+  .contact-panel::before {
+    inset: 0;
+    background:
+      linear-gradient(45deg, transparent calc(50% - 0.5px), rgba(242, 216, 131, 0.13) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+      linear-gradient(-45deg, transparent calc(50% - 0.5px), rgba(73, 182, 166, 0.1) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+      linear-gradient(90deg, transparent calc(50% - 0.5px), rgba(199, 162, 74, 0.09) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+      linear-gradient(0deg, transparent calc(50% - 0.5px), rgba(199, 162, 74, 0.09) calc(50% - 0.5px) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+    background-position: center;
+    background-size: 180px 180px;
+    opacity: 0.42;
+    transform: rotate(0.001deg);
+  }
+
+  .contact-panel-header {
+    margin-bottom: 1.05rem;
+  }
+
+  .contact-panel-kicker {
+    margin-bottom: 0.38rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+  }
+
+  .contact-panel-title {
+    font-size: 1.45rem;
+  }
+
+  .contact-panel-subtitle {
+    display: none;
+  }
+
+  .contact-card {
+    min-height: 2.95rem;
+    gap: 0.72rem;
+    padding: 0.75rem 0.82rem;
+  }
+
+  .contact-icon {
+    width: 30px;
+    height: 30px;
+    flex-basis: 30px;
+  }
+
+  .contact-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .contact-card small {
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+  }
+
+  .contact-card strong {
+    font-size: 0.92rem;
+  }
+}
