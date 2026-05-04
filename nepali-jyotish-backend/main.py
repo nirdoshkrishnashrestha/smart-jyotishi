@@ -5,6 +5,11 @@ from api import auth, profile, chat, questions, payments
 
 app = FastAPI(title="Smart Jyotishi Backend")
 
+@app.on_event("startup")
+async def create_tables():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+        
 # CORS Configuration
 origins = [
     "http://localhost:5173",
