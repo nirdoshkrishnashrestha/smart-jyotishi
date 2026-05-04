@@ -1,6 +1,7 @@
 fastapi
 uvicorn
 sqlalchemy
+email-validator
 asyncpg
 alembic
 pydantic
