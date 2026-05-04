@@ -23,13 +23,14 @@ elif DATABASE_URL.startswith("postgresql://"):
 try:
     logger.info(f"Connecting to database at {DATABASE_URL.split('@')[-1]}")
     engine = create_async_engine(
-        DATABASE_URL, 
-        echo=False,
-        pool_pre_ping=True,
-        connect_args={
-            "command_timeout": 60,
-        }
-    )
+    DATABASE_URL,
+    echo=False,
+    pool_pre_ping=True,
+    connect_args={
+        "command_timeout": 60,
+        "statement_cache_size": 0,
+    },
+)
     AsyncSessionLocal = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 except Exception as e:
     logger.error(f"Failed to create database engine: {e}")
