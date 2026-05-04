@@ -369,9 +369,6 @@ async def generate_astro_reading(
         "Return ONLY the raw JSON response. Shubha Ashirwad."
     )
     
-    if APP_ENV == "production":
-        return await _generate_with_claude(prompt, system_prompt_formatted)
-    else:
         return await _generate_with_gemini(prompt, system_prompt_formatted)
 
 async def generate_dashboard_profile(chart_data: str, provided_rashi: str = None) -> dict:
@@ -406,11 +403,8 @@ Note: Even small changes in planetary longitudes due to the {ayanamsa_name} syst
 
     prompt = f"Chart Data (System: {ayanamsa_name}):\n{chart_data}\n\nReturn ONLY the JSON. No markdown ticks."
     
-    result = await (
-        _generate_with_claude(prompt, system_prompt)
-        if APP_ENV == "production"
-        else _generate_with_gemini(prompt, system_prompt)
-    )
+    result = await _generate_with_gemini(prompt, system_prompt)
+
     if isinstance(result, dict) and result.get("error"):
         return result
     if isinstance(result, dict) and not str(result.get("राशी", "")).strip():
@@ -476,9 +470,5 @@ MANDATORY ASTROLOGICAL EVIDENCE:
 - For Health, Career, and Love sections, justify your prediction by pointing to specific planets in specific houses (e.g., "पाँचौ भावमा अवस्थित X ग्रहको प्रभावले...").
 - Ensure the content is spiritually grounded, scientifically derived from this exact math, and culturally relevant to Nepali users."""
 
-    result = await (
-        _generate_with_claude(prompt, system_prompt)
-        if APP_ENV == "production"
-        else _generate_with_gemini(prompt, system_prompt)
-    )
+result = await _generate_with_gemini(prompt, system_prompt)
     return result
