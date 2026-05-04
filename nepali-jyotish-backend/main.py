@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from api import auth, profile, chat, questions, payments
 
-app = FastAPI(title="Nepali Jyotish Backend")
+app = FastAPI(title="Smart Jyotishi Backend")
 
 # CORS Configuration
 origins = [
