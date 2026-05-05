@@ -42,6 +42,13 @@ const dashaMapping = {
   "Ketu": "केतु"
 };
 
+const cardAccents = [
+  'from-[#c7a24a]/38 via-[#49b6a6]/18 to-transparent',
+  'from-[#49b6a6]/28 via-[#20345f]/14 to-transparent',
+  'from-[#8b1d2c]/22 via-[#c7a24a]/16 to-transparent',
+  'from-[#20345f]/22 via-[#49b6a6]/16 to-transparent',
+];
+
 const DashboardPage = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
@@ -136,29 +143,64 @@ const DashboardPage = () => {
     return translated;
   };
 
+  const astroFields = profile ? Object.entries({
+    "राशी": { emoji: "♈", val: cleanRashi(profile["राशी"]), highlight: true },
+    "नामको अक्षर": { emoji: "✺", val: profile["नामको_अक्षर"] || profile["First_Letter"] },
+    "लग्न": { emoji: "↑", val: profile["लग्न"] },
+    "राशी स्वामी": { emoji: "♔", val: profile["राशी_स्वामी"] },
+    "वर्तमान महादशा": { emoji: "◔", val: translateDasha(planetaryData?.Current_Dasha || profile["वर्तमान_दशा"]) },
+    "सूर्य राशी": { emoji: "☉", val: rashiMapping[planetaryData?.Planets?.Sun?.rashi] || profile["सूर्य_राशी"] },
+    "नक्षत्र": { emoji: "✦", val: profile["नक्षत्र"] },
+    "योग": { emoji: "☯", val: profile["योग"] },
+    "वर्ण (Varna)": { emoji: "◈", val: profile["वर्ण"] },
+    "वश्य (Vashya)": { emoji: "◎", val: profile["वश्य"] },
+    "योनी (Yoni)": { emoji: "◐", val: profile["योनी"] },
+    "गण (Gana)": { emoji: "✧", val: profile["गण"] },
+    "नाडी (Nadi)": { emoji: "≋", val: profile["नाडी"] },
+    "उमेर": { emoji: "◷", val: profile["उमेर (Age)"] },
+    "जन्म मिति": { emoji: "◫", val: profile["जन्म मिति (AD)"] },
+    "शुभ अङ्क": { emoji: "✚", val: profile["शुभ_अङ्क"] },
+    "अशुभ अङ्क": { emoji: "✕", val: profile["अशुभ_अङ्क"] },
+    "शुभ रंग": { emoji: "◉", val: profile["शुभ_रंग"] },
+    "अशुभ रंग": { emoji: "◌", val: profile["अशुभ_रंग"] },
+    "शुभ बार": { emoji: "☼", val: profile["शुभ_बार"] },
+    "अशुभ बार": { emoji: "☾", val: profile["अशुभ_बार"] },
+    "शुभ दिशा": { emoji: "✢", val: profile["शुभ_दिशा"] },
+    "अशुभ दिशा": { emoji: "⟡", val: profile["अशुभ_दिशा"] },
+  }) : [];
+
   return (
-    <div className="min-h-screen p-4 md:p-8">
+    <div className="relative min-h-screen overflow-hidden bg-[linear-gradient(135deg,#f4f1e9_0%,#fffdf8_42%,#edf7f4_100%)] px-4 py-5 text-[#171b22] sm:px-6 lg:px-8">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 z-0 opacity-40 [background-image:linear-gradient(90deg,rgba(22,12,18,0.04)_1px,transparent_1px),linear-gradient(0deg,rgba(32,52,95,0.035)_1px,transparent_1px)] [background-size:76px_76px]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 z-0 opacity-80 [background-image:linear-gradient(120deg,transparent_0_39%,rgba(199,162,74,0.13)_39.12%,transparent_39.3%_100%),linear-gradient(34deg,transparent_0_66%,rgba(73,182,166,0.12)_66.12%,transparent_66.3%_100%)]"
+      />
       {/* Header */}
-      <header className="flex justify-between items-center mb-10 pb-4 border-b border-[#e6dfd1]">
-        <h1 className="text-2xl md:text-3xl font-black text-[#0f1d30] tracking-tight">
-          Smart<span className="text-[#b27b4e]">Jyotishi</span>
+      <header className="relative z-20 mx-auto mb-8 flex max-w-7xl items-center justify-between rounded-lg border border-white/75 bg-white/34 px-4 py-3 shadow-[0_16px_55px_rgba(22,12,18,0.08),inset_0_1px_0_rgba(255,255,255,0.85)] backdrop-blur-2xl">
+        <h1 className="flex items-center gap-3 font-['Cinzel','Times_New_Roman',serif] text-xl font-semibold tracking-[0.08em] text-[#171b22] md:text-2xl">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#c7a24a]/55 bg-white/58 pt-1 font-['Noto_Serif_Devanagari',serif] text-base text-[#8b1d2c] shadow-[inset_0_0_18px_rgba(255,255,255,0.75),0_10px_26px_rgba(22,12,18,0.09)] backdrop-blur-xl">ॐ</span>
+          SmartJyotishi
         </h1>
         <div className="flex items-center gap-4">
           <div className="text-right hidden sm:block">
-            <p className="text-sm text-[#3a4a5e] font-medium">स्वागत छ,</p>
-            <p className="font-bold text-[#0f1d30]">{userName || "User"}</p>
+            <p className="text-sm text-[#59606b] font-medium">स्वागत छ,</p>
+            <p className="font-bold text-[#171b22]">{userName || "User"}</p>
           </div>
-          <div className="relative group inline-block">
-            <div className="w-11 h-11 rounded-full bg-[#fdfaf6] border-2 border-[#b27b4e] flex items-center justify-center text-[#0f1d30] font-bold shadow-sm cursor-pointer">
+          <div className="group relative inline-block">
+            <div className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/80 bg-white/65 font-bold text-[#171b22] shadow-[0_12px_30px_rgba(22,12,18,0.11),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl">
               👤
             </div>
 
             {/* Dropdown Menu on hover for Sign out */}
-            <div className="absolute right-0 top-full pt-2 w-40 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all z-50">
-              <div className="bg-white rounded-md shadow-lg py-1 border border-[#e6dfd1]">
+            <div className="invisible absolute right-0 top-full z-50 w-40 pt-2 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
+              <div className="rounded-lg border border-white/80 bg-white/78 py-1 shadow-2xl backdrop-blur-2xl">
                 <button
                   onClick={() => navigate('/contact')}
-                  className="block w-full text-left px-4 py-2 text-sm text-[#0f1d30] hover:bg-gray-100 font-bold"
+                  className="block w-full px-4 py-2 text-left text-sm font-bold text-[#171b22] hover:bg-white/55"
                 >
                   Contact
                 </button>
@@ -167,7 +209,7 @@ const DashboardPage = () => {
                     clearClientSession();
                     window.location.replace('/login');
                   }}
-                  className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 font-bold"
+                  className="block w-full px-4 py-2 text-left text-sm font-bold text-[#8b1d2c] hover:bg-white/55"
                 >
                   Sign Out
                 </button>
@@ -178,43 +220,52 @@ const DashboardPage = () => {
       </header>
 
       {/* Main Grid */}
-      <div className="max-w-6xl mx-auto space-y-8 relative z-10">
+      <div className="relative z-10 mx-auto max-w-7xl space-y-8">
 
         {/* Welcome Section */}
-        <div className="glass-card bg-white p-6 md:p-10 rounded-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between border-l-4 border-l-[#b27b4e]">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#b27b4e] opacity-[0.03] rounded-full filter blur-3xl pointer-events-none"></div>
+        <div className="relative overflow-hidden rounded-lg border border-white/80 bg-white/64 p-6 shadow-[0_24px_80px_rgba(22,12,18,0.1),inset_0_1px_0_rgba(255,255,255,0.88)] backdrop-blur-2xl md:p-8">
+          <div
+            aria-hidden="true"
+            className="absolute inset-y-0 right-0 w-2/3 opacity-40 [background-image:repeating-linear-gradient(135deg,rgba(32,52,95,0.16)_0_1px,transparent_1px_24px)]"
+          />
 
-          <div className="mb-6 md:mb-0 relative z-10">
-            <h2 className="text-3xl font-bold text-[#0f1d30]">तपाईंको चिना तयार छ</h2>
-          </div>
+          <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-3xl">
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-[#1f8f84]">Personal Kundali Dashboard</p>
+              <h2 className="text-3xl font-semibold leading-tight text-[#171b22] md:text-5xl">तपाईंको चिना तयार छ</h2>
+              <p className="mt-4 max-w-2xl text-sm font-medium leading-7 text-[#4e5661] md:text-base">
+                Your profile is arranged as a compact astrological control center, with the most important signs, dashas, and planetary positions ready to scan.
+              </p>
+            </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 relative z-10 w-full md:w-auto">
-            <button
-              onClick={() => navigate('/chat')}
-              className="w-full md:w-auto whitespace-nowrap px-6 py-3 bg-[#0f1d30] hover:bg-[#1a2f4c] text-white font-bold rounded-xl shadow-[0_8px_20px_rgba(15,29,48,0.2)] transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2 text-sm"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
-              </svg>
-              Ask SmartJyotishi
-            </button>
-            <button
-              onClick={() => navigate('/birth-details')}
-              className="w-full md:w-auto whitespace-nowrap px-6 py-3 bg-white hover:bg-[#fdfaf6] text-[#b27b4e] border-2 border-[#b27b4e] font-bold rounded-xl shadow-[0_8px_20px_rgba(178,123,78,0.1)] transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2 text-sm"
-            >
-              ⚙️ Edit Birth Details
-            </button>
+            <div className="flex w-full flex-col gap-3 sm:flex-row md:w-auto">
+              <button
+                onClick={() => navigate('/chat')}
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#20345f] px-6 py-3 text-sm font-black text-white shadow-[0_14px_30px_rgba(32,52,95,0.2)] transition-all hover:-translate-y-0.5 hover:bg-[#172848] active:translate-y-0 md:w-auto"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                </svg>
+                Ask SmartJyotishi
+              </button>
+              <button
+                onClick={() => navigate('/birth-details')}
+                className="flex w-full items-center justify-center gap-2 rounded-lg border border-[#49b6a6]/45 bg-white/55 px-6 py-3 text-sm font-black text-[#14695f] shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_26px_rgba(22,12,18,0.06)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:bg-white/72 active:translate-y-0 md:w-auto"
+              >
+                ⚙️ Edit Birth Details
+              </button>
+            </div>
           </div>
         </div>
 
         {loading ? (
-          <div className="text-center py-20 text-[#b27b4e] font-bold text-xl animate-pulse">Loading cosmic details...</div>
+          <div className="rounded-lg border border-white/80 bg-white/62 py-20 text-center text-xl font-bold text-[#20345f] shadow-[0_24px_80px_rgba(22,12,18,0.09),inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-2xl animate-pulse">Loading cosmic details...</div>
         ) : error || !profile ? (
-          <div className="text-center py-20">
-            <p className="text-[#3a4a5e] mb-4">You have not created your astrological profile yet.</p>
+          <div className="rounded-lg border border-white/80 bg-white/62 py-20 text-center shadow-[0_24px_80px_rgba(22,12,18,0.09),inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-2xl">
+            <p className="mb-4 text-[#4e5661]">You have not created your astrological profile yet.</p>
             <button
               onClick={() => navigate('/birth-details')}
-              className="bg-[#b27b4e] hover:bg-[#c98e5e] text-white font-bold py-3 px-6 rounded-lg shadow"
+              className="rounded-lg bg-[#20345f] px-6 py-3 font-black text-white shadow-[0_14px_30px_rgba(32,52,95,0.2)] hover:bg-[#172848]"
             >
               Generate Astro Profile
             </button>
@@ -223,107 +274,90 @@ const DashboardPage = () => {
           <div className="space-y-8">
             {aiWarning && (
               <div
-                className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-[#5c4a2e] text-sm md:text-base leading-relaxed"
+                className="rounded-lg border border-[#c7a24a]/35 bg-[#fff8df]/72 px-4 py-3 text-sm leading-relaxed text-[#715a20] shadow-[0_10px_32px_rgba(22,12,18,0.06),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl md:text-base"
                 role="status"
               >
                 {aiWarning}
               </div>
             )}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
               {/* Dynamic Rendering of Astro Fields */}
-              {Object.entries({
-                "राशी": { emoji: "♈", val: cleanRashi(profile["राशी"]), highlight: true },
-                "नामको अक्षर": { emoji: "🔤", val: profile["नामको_अक्षर"] || profile["First_Letter"] },
-                "लग्न": { emoji: "⬆️", val: profile["लग्न"] },
-                "राशी स्वामी": { emoji: "👑", val: profile["राशी_स्वामी"] },
-                "वर्तमान महादशा": { emoji: "⏳", val: translateDasha(planetaryData?.Current_Dasha || profile["वर्तमान_दशा"]) },
-                "सूर्य राशी": { emoji: "☀️", val: rashiMapping[planetaryData?.Planets?.Sun?.rashi] || profile["सूर्य_राशी"] },
-                "नक्षत्र": { emoji: "✨", val: profile["नक्षत्र"] },
-                "योग": { emoji: "🕉️", val: profile["योग"] },
-                "वर्ण (Varna)": { emoji: "👳‍♂️", val: profile["वर्ण"] },
-                "वश्य (Vashya)": { emoji: "🧲", val: profile["वश्य"] },
-                "योनी (Yoni)": { emoji: "🐎", val: profile["योनी"] },
-                "गण (Gana)": { emoji: "🎭", val: profile["गण"] },
-                "नाडी (Nadi)": { emoji: "🧬", val: profile["नाडी"] },
-                "उमेर": { emoji: "👤", val: profile["उमेर (Age)"] },
-                "जन्म मिति": { emoji: "🗓️", val: profile["जन्म मिति (AD)"] },
-                
-                "शुभ अङ्क": { emoji: "🔢", val: profile["शुभ_अङ्क"] },
-                "अशुभ अङ्क": { emoji: "🛑", val: profile["अशुभ_अङ्क"] },
-                
-                "शुभ रंग": { emoji: "🎨", val: profile["शुभ_रंग"] },
-                "अशुभ रंग": { emoji: "🌈", val: profile["अशुभ_रंग"] },
-                
-                "शुभ बार": { emoji: "✅", val: profile["शुभ_बार"] },
-                "अशुभ बार": { emoji: "❌", val: profile["अशुभ_बार"] },
-                
-                "शुभ दिशा": { emoji: "🧭", val: profile["शुभ_दिशा"] },
-                "अशुभ दिशा": { emoji: "🚫", val: profile["अशुभ_दिशा"] },
-              }).map(([label, data], idx) => (
+              {astroFields.map(([label, data], idx) => (
                 <div 
                   key={idx} 
-                  className={`glass-card p-6 rounded-2xl flex flex-col group transition-all cursor-default border-2 
+                  className={`group relative flex min-h-[154px] cursor-default flex-col overflow-hidden rounded-lg border p-5 shadow-[0_18px_52px_rgba(22,12,18,0.08),inset_0_1px_0_rgba(255,255,255,0.78)] backdrop-blur-2xl transition-all duration-300 before:pointer-events-none before:absolute before:inset-0 before:bg-[linear-gradient(135deg,rgba(255,255,255,0.58)_0%,transparent_42%,rgba(255,255,255,0.22)_100%)] before:opacity-70 before:transition-opacity hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(22,12,18,0.12)] hover:before:opacity-100
                     ${data.highlight 
-                      ? 'bg-[#fffbeb] border-[#b27b4e] shadow-[0_10px_30px_rgba(178,123,78,0.2)] scale-105 z-10' 
+                      ? 'border-[#c7a24a]/55 bg-[#fff8df]/74 shadow-[0_22px_70px_rgba(199,162,74,0.13)] sm:col-span-2 lg:col-span-2' 
                       : data.isLink
-                        ? 'bg-[#f0f4f8] border-[#0f1d30]/20 hover:border-[#0f1d30] hover:shadow-lg cursor-pointer transform hover:-translate-y-1'
-                        : 'bg-[#fdfaf6] border-[#e6dfd1] hover:border-[#b27b4e] hover:shadow-md'
+                        ? 'border-[#49b6a6]/35 bg-white/62 hover:border-[#49b6a6]/70'
+                        : 'border-white/80 bg-white/66 hover:border-[#c7a24a]/45'
                     }`}
                   onClick={data.isLink ? () => navigate(data.path) : undefined}
                 >
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center mb-4 text-xl font-bold group-hover:scale-110 transition-transform shadow-sm 
-                    ${data.highlight 
-                      ? 'bg-[#b27b4e] text-white border-none' 
-                      : 'bg-[#fdfaf6] border border-[#e6dfd1] text-[#0f1d30]'
-                    }`}
-                  >
-                    {data.emoji}
+                  <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${cardAccents[idx % cardAccents.length]}`} />
+                  <div className="mb-5 flex items-start justify-between gap-3">
+                    <div className={`relative z-10 flex h-11 w-11 items-center justify-center rounded-lg border font-['Cinzel','Times_New_Roman',serif] text-[20px] font-black leading-none shadow-[inset_0_1px_0_rgba(255,255,255,0.88),0_10px_22px_rgba(22,12,18,0.07)] backdrop-blur-xl
+                      ${data.highlight
+                        ? 'border-[#c7a24a]/45 bg-white/68 text-[#8b1d2c]'
+                        : 'border-white/85 bg-white/62 text-[#20345f]'
+                      }`}
+                    >
+                      {data.emoji}
+                    </div>
+                    {data.highlight && (
+                      <span className="relative z-10 rounded-full border border-[#c7a24a]/40 bg-white/58 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[#8b1d2c] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-xl">
+                        Primary
+                      </span>
+                    )}
                   </div>
-                  <h3 className={`font-semibold text-xs mb-1 uppercase tracking-wider 
-                    ${data.highlight ? 'text-[#8e603a]' : 'text-[#3a4a5e]'}`}
+                  <h3 className={`relative z-10 mb-2 text-xs font-black uppercase tracking-[0.14em] 
+                    ${data.highlight ? 'text-[#8b1d2c]' : 'text-[#1f8f84]'}
+                  `}
                   >
                     {label}
                   </h3>
-                  <p className={`text-xl font-bold 
-                    ${data.highlight ? 'text-[#0f1d30] text-2xl' : 'text-[#0f1d30]'}`}
+                  <p className={`relative z-10 break-words font-['Noto_Serif_Devanagari','Times_New_Roman',serif] font-semibold leading-tight 
+                    ${data.highlight ? 'text-3xl text-[#171b22]' : 'text-xl text-[#242b34]'}
+                  `}
                   >
                     {data.val || 'N/A'}
                   </p>
-                  {data.highlight && (
-                    <div className="absolute top-3 right-3 text-[#b27b4e] animate-pulse">
-                      ★
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
 
             {/* Planetary Positions Section */}
             {planetaryData && planetaryData.Planets && (
-              <div className="glass-card bg-white p-8 rounded-2xl border-t-4 border-t-[#0f1d30]">
-                <h2 className="text-2xl font-bold text-[#0f1d30] mb-6 flex items-center gap-2">
-                  🪐 ग्रहको स्थिति (Planetary Positions)
-                </h2>
+              <div className="overflow-hidden rounded-lg border border-white/80 bg-white/66 shadow-[0_24px_80px_rgba(22,12,18,0.1),inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-2xl">
+                <div className="flex flex-col gap-2 border-b border-[#d7d1c6]/70 px-5 py-5 sm:flex-row sm:items-end sm:justify-between md:px-7">
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-[0.18em] text-[#1f8f84]">Planetary Matrix</p>
+                    <h2 className="mt-2 text-2xl font-semibold text-[#171b22]">
+                      ग्रहको स्थिति
+                    </h2>
+                  </div>
+                  <p className="text-sm font-medium text-[#5d6570]">Rashi, navamsha, house and degree overview</p>
+                </div>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse">
+                  <table className="w-full border-collapse text-left">
                     <thead>
-                      <tr className="border-b border-[#e6dfd1]">
-                        <th className="py-4 font-bold text-[#3a4a5e] uppercase text-xs tracking-wider">ग्रह (Graha)</th>
-                        <th className="py-4 font-bold text-[#3a4a5e] uppercase text-xs tracking-wider">राशी (Rashi)</th>
-                        <th className="py-4 font-bold text-[#3a4a5e] uppercase text-xs tracking-wider">नवांश (Navamsha)</th>
-                        <th className="py-4 font-bold text-[#3a4a5e] uppercase text-xs tracking-wider">भाव (House)</th>
-                        <th className="py-4 font-bold text-[#3a4a5e] uppercase text-xs tracking-wider">अंश (Degrees)</th>
+                      <tr className="border-b border-[#d7d1c6]/70 bg-white/48 backdrop-blur-xl">
+                        <th className="px-5 py-4 text-xs font-black uppercase tracking-[0.14em] text-[#7a6420]">ग्रह (Graha)</th>
+                        <th className="px-5 py-4 text-xs font-black uppercase tracking-[0.14em] text-[#7a6420]">राशी (Rashi)</th>
+                        <th className="px-5 py-4 text-xs font-black uppercase tracking-[0.14em] text-[#7a6420]">नवांश (Navamsha)</th>
+                        <th className="px-5 py-4 text-xs font-black uppercase tracking-[0.14em] text-[#7a6420]">भाव (House)</th>
+                        <th className="px-5 py-4 text-xs font-black uppercase tracking-[0.14em] text-[#7a6420]">अंश (Degrees)</th>
                       </tr>
                     </thead>
                     <tbody>
                       {Object.entries(planetaryData.Planets).map(([name, data], idx) => (
-                        <tr key={idx} className="border-b border-[#fdfaf6] hover:bg-[#fdfaf6] transition-colors">
-                          <td className="py-4 font-bold text-[#0f1d30]">{grahaMapping[name] || name}</td>
-                          <td className="py-4 text-[#3a4a5e] font-medium">{rashiMapping[data.rashi] || data.rashi}</td>
-                          <td className="py-4 text-[#3a4a5e] font-medium">{rashiMapping[data.navamsha_rashi] || data.navamsha_rashi}</td>
-                          <td className="py-4 text-[#3a4a5e] font-medium">{data.house}</td>
-                          <td className="py-4 text-[#3a4a5e] font-medium">{data.longitude}°</td>
+                        <tr key={idx} className="border-b border-[#d7d1c6]/55 bg-white/18 transition-colors last:border-b-0 hover:bg-[#49b6a6]/12">
+                          <td className="px-5 py-4 font-bold text-[#171b22]">{grahaMapping[name] || name}</td>
+                          <td className="px-5 py-4 font-medium text-[#4e5661]">{rashiMapping[data.rashi] || data.rashi}</td>
+                          <td className="px-5 py-4 font-medium text-[#4e5661]">{rashiMapping[data.navamsha_rashi] || data.navamsha_rashi}</td>
+                          <td className="px-5 py-4 font-medium text-[#4e5661]">{data.house}</td>
+                          <td className="px-5 py-4 font-bold text-[#14695f]">{data.longitude}°</td>
                         </tr>
                       ))}
                     </tbody>
